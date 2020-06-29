@@ -39,12 +39,17 @@ function* entrance() {
     yield masterHelpInit();
     // 任务开始
     for (let task_name in function_map) {
-        if (!taskInfo[task_name].finished) {
-            console.log('任务' + task_name + '开始');
-            yield function_map[task_name]();
-        } else {
-            console.log('任务' + task_name + '已完成');
+        if(taskInfo[task_name]){
+            if (!taskInfo[task_name].finished) {
+                console.log('任务' + task_name + '开始');
+                yield function_map[task_name]();
+            } else {
+                console.log('任务' + task_name + '已完成');
+            }
+        }else{
+            console.log('任务' + task_name + '不存在'); 
         }
+        
     }
 
     yield energyCollect();
