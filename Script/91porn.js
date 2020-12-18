@@ -1,5 +1,5 @@
 //添加重写引用，打开 91.cn
-// ^http://91.cn url script-analyze-echo-response https://raw.githubusercontent.com/uniqueque/QuantumultX/master/Script/91porn.js
+// https://raw.githubusercontent.com/uniqueque/QuantumultX/master/91porn.rewrite.remote.conf
 
 const $ = new init()
 !(async () => {
