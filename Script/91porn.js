@@ -1,3 +1,6 @@
+//添加重写引用，打开 91.cn
+// ^http://91.cn url script-analyze-echo-response https://raw.githubusercontent.com/uniqueque/QuantumultX/master/Script/91porn.js
+
 const $ = new init()
 !(async () => {
     if ($request.url.indexOf('play') == -1) {
