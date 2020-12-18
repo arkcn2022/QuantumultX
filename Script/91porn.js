@@ -31,49 +31,54 @@ async function getListPage() {
     const reg_title = /<span class="video-title title-truncate m-t-5">(.*)<\/span>/g
     const res1 = res
     const res2 = res
-    let html = `<html data-dpr="1" style="font-size: 27.6px;">
-<head>
-</head>
-<body>
-  <div><a href="/">主页</a>
-    <a href="/?category=hot">当前最热</a>
-    <a href="/?category=rp">最近得分</a>
-    <a href="/?category=long">10分钟以上</a>
-    <a href="/?category=md">本月讨论</a>
-    <a href="/?category=tf">本月收藏</a>
-    <a href="/?category=mf">收藏最多</a>
-    <a href="/?category=rf">最近加精</a>
-    <a href="/?category=top">本月最热</a>
-    <a href="/?category=tf&m=-1">上月最热</a>
-    <a href="/?category=hd">高清</a>
-  </div>
-<div style="width: 100%;background-size: 100% auto;overflow: hidden;  position: relative;">
+    let html = `<html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+      <style>
+       li{list-style:none;display:inline-block;width:100%;text-align:center;overflow:hidden;vertical-align:bottom;}a{color:#ff8800;text-decoration:none}.content{width:99%;padding:5px 0;overflow:hidden;}.img-wrap{padding:5px;background-color:#fff;border:1px solid #ccc;}.img-box{height:200px;overflow:hidden;}.img-box img{position:relative;width:100%;top:50%;transform:translateY(-50%);}.title{padding-top:5px;font-size:15px;}
+      </style>
+    </head>
+    <body>
+      <div><a href="/">主页</a>
+        <a href="/?category=hot">当前最热</a>
+        <a href="/?category=rp">最近得分</a>
+        <a href="/?category=long">10分钟以上</a>
+        <a href="/?category=md">本月讨论</a>
+        <a href="/?category=tf">本月收藏</a>
+        <a href="/?category=mf">收藏最多</a>
+        <a href="/?category=rf">最近加精</a>
+        <a href="/?category=top">本月最热</a>
+        <a href="/?category=tf&m=-1">上月最热</a>
+        <a href="/?category=hd">高清</a>
+      </div>
+      <div>
+        <ul style="padding-inline-start: 0px;">
 `
     while (reg.test(res)) {
         const viewkey = RegExp.$1
         const img = reg_img.exec(res1)[1]
         const title = reg_title.exec(res2)[1]
-        html += `<div style="width: 100%;
- padding: 0.6rem 0.48rem;
- border-radius: 0.4rem;
- margin-bottom: 0.4rem;
- overflow: hidden;
- position: relative;">
-   <a target="blank" href="/play?viewkey=${viewkey}">
-     <img src="${img}" width="360px" height="270px" title="${title}">
-   </a>
-   <a target="blank" href="/play?viewkey=${viewkey}" title="${title}">
-               <span >${title}</span>
-             </a>
- </div>`
+        html += `      <li>
+        <a target="blank" href="/play?viewkey=${viewkey}">
+          <div class="content">
+            <div class="img-wrap">
+              <div class="img-box">
+                <img src="${img}">
+              </div>
+            </div>
+            <div class="title">${title}</div>
+          </div>
+        </a>
+      </li>`
     }
-    html += `</div>
-<div style="margin:20px">
-<a href="/?category=${category}&m=${m}&page=${page + 1}" title="下一页">
-                  <span>下一页</span>
-                </a>
-</div>
-</html>`
+    html += `</ul>
+    </div>
+    <div style="text-align: center;padding-bottom: 20px;">
+      <a href="/?category=${category}&m=${m}&page=${page + 1}" title="下一页">
+        <span>下一页</span>
+      </a>
+    </div>
+  </html>`
     if ($.isQuanX) {
         $.done({ status: 'HTTP/1.1 200', headers: { 'Content-Type': 'text/html;charset=UTF-8' }, body: html })
     } else {
