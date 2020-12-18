@@ -33,6 +33,7 @@ async function getListPage() {
     const res2 = res
     let html = `<html>
     <head>
+      <title>保重身体</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
       <style>
        li{list-style:none;display:inline-block;width:100%;text-align:center;overflow:hidden;vertical-align:bottom;}a{color:#ff8800;text-decoration:none}.content{width:99%;padding:5px 0;overflow:hidden;}.img-wrap{padding:5px;background-color:#fff;border:1px solid #ccc;}.img-box{height:200px;overflow:hidden;}.img-box img{position:relative;width:100%;top:50%;transform:translateY(-50%);}.title{padding-top:5px;font-size:15px;}
@@ -108,25 +109,33 @@ async function getPlayPage() {
         const reg1 = /document\.write\(strencode\(".*"\)\);/g
 
         const html = `<html>
-<head>
-</head>
-<body>
-        <div>
-                     <script language="JScript" type="text/jscript" src="http://91porn.com/js/m.js"></script>
-                  <div>
-        
-                     <video controls="" width="80%" autoplay="" name="media">
-                     
-                                      <script>
-                                         ${res1.match(reg1)[0]}
-
-                </script>
-
-                   </video>
-            
-            </div>
-        </div>
-</html>`
+        <head>
+           <title>注意克制</title>
+           <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        </head>
+        <body>
+           <div>
+              <script language="JScript" type="text/jscript" src="http://91porn.com/js/m.js"></script>
+              <div>
+                 <video id="player" width="100%">
+                    <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+                    <script>
+                        ${res1.match(reg1)[0]}
+                    </script>
+                    <script>
+                       var myFP = fluidPlayer(
+                          'player', {
+                          "layoutControls": {
+                             "allowTheatre": true,
+                             "playPauseAnimation": true,
+                             "playButtonShowing": true,
+                          },
+                       })
+                    </script>
+                 </video>
+              </div>
+           </div>
+        </html>`
         if ($.isQuanX) {
             $.done({ status: 'HTTP/1.1 200', headers: { 'Content-Type': 'text/html;charset=UTF-8' }, body: html })
         } else {
