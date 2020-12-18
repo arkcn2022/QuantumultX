@@ -83,7 +83,7 @@ async function getListPage() {
     if ($.isQuanX) {
         $.done({ status: 'HTTP/1.1 200', headers: { 'Content-Type': 'text/html;charset=UTF-8' }, body: html })
     } else {
-        $.done({ response: { status: 200, headers: { 'Content-Type': 'text/html;charset=UTF-8' }, body: html }})
+        $.done({ response: { status: 200, headers: { 'Content-Type': 'text/html;charset=UTF-8' }, body: html } })
     }
 }
 async function getPlayPage() {
@@ -97,6 +97,7 @@ async function getPlayPage() {
         }
     })
     const reg = /<textarea rows="2" name="video_link" id="fm-video_link".*>(.*)<\/textarea>/g
+    let t = ``
     if (reg.test(res)) {
         const url2 = RegExp.$1
         const res1 = await $.get({
@@ -107,40 +108,44 @@ async function getPlayPage() {
             }
         })
         const reg1 = /document\.write\(strencode\(".*"\)\);/g
+        t = res1.match(reg1)[0]
 
-        const html = `<html>
-        <head>
-           <title>注意克制</title>
-           <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-        </head>
-        <body>
-           <div>
-              <script language="JScript" type="text/jscript" src="http://91porn.com/js/m.js"></script>
-              <div>
-                 <video id="player" width="100%">
-                    <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
-                    <script>
-                        ${res1.match(reg1)[0]}
-                    </script>
-                    <script>
-                       var myFP = fluidPlayer(
-                          'player', {
-                          "layoutControls": {
-                             "allowTheatre": true,
-                             "playPauseAnimation": true,
-                             "playButtonShowing": true,
-                          },
-                       })
-                    </script>
-                 </video>
-              </div>
-           </div>
-        </html>`
-        if ($.isQuanX) {
-            $.done({ status: 'HTTP/1.1 200', headers: { 'Content-Type': 'text/html;charset=UTF-8' }, body: html })
-        } else {
-            $.done({ response: { status: 200, headers: { 'Content-Type': 'text/html;charset=UTF-8' }, body: html } })
-        }
+    } else {
+        const reg1 = /document\.write\(strencode\(".*"\)\);/g
+        t = res.match(reg1)[0]
+    }
+    const html = `<html>
+    <head>
+       <title>注意克制</title>
+       <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    </head>
+    <body>
+       <div>
+          <script language="JScript" type="text/jscript" src="http://91porn.com/js/m.js"></script>
+          <div>
+             <video id="player" width="100%">
+                <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+                <script>
+                    ${t}
+                </script>
+                <script>
+                   var myFP = fluidPlayer(
+                      'player', {
+                      "layoutControls": {
+                         "allowTheatre": true,
+                         "playPauseAnimation": true,
+                         "playButtonShowing": true,
+                      },
+                   })
+                </script>
+             </video>
+          </div>
+       </div>
+    </html>`
+    if ($.isQuanX) {
+        $.done({ status: 'HTTP/1.1 200', headers: { 'Content-Type': 'text/html;charset=UTF-8' }, body: html })
+    } else {
+        $.done({ response: { status: 200, headers: { 'Content-Type': 'text/html;charset=UTF-8' }, body: html } })
     }
 }
 
